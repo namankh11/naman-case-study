@@ -1,7 +1,4 @@
-name: calculator
-display_name: Calculator
-version: 1.0.0
-type: python_script
+name: Calculator CI
 
 on:
   push:
