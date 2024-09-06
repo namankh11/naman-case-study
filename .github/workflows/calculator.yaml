@@ -3,32 +3,34 @@ display_name: Calculator
 version: 1.0.0
 type: python_script
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+inputs:
+- name: x
+  type: number
+  description: The first number to calculate.
+- name: y
+  type: number
+  description: The second number to calculate.
+- name: operation
+  type: string
+  description: The operation to perform. Can be 'add', 'subtract', 'multiply', or 'divide'.
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+outputs:
+- name: result
+  type: number
+  description: The result of the calculation.
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+command:
+- python
+- calculator.py
+- --x
+- $inputs.x
+- --y
+- $inputs.y
+- --operation
+- $inputs.operation
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
-
-    - name: Run tests
-      run: |
-        pytest test.py
+environment:
+  conda:
+    dependencies:
+    - python=3.8
+    - pytest
